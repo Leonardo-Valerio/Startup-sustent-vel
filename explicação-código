@@ -1,0 +1,166 @@
+A ideia da Sprint é criar um projeto de uma empresa que ajuda os usuários a tratar melhor o lixo por meio da reciclagem
+e o descarte correto
+
+Criação do main.py e função exibir:
+    no main.py o código começa criando uma lista onde irá conter as opções do meu menu, exibo ele com a função 'exibir'
+    que faz um for nessa lista e printa o número do indice - opção de menu
+
+    crio uma lista vazia 'cadastro' e um dicionario vazio 'login', no dicionário, irei guardar
+    o usuário e a senha que ele digitar, já na lista apendarei esses dicionários (caso o usuário crie mais de um cadastro)
+
+Validar número inteiro:
+    peço para o usuário digitar o número da opção que ele deseja com uma função 'lerInt' que vai pegar a string que o
+    usuário digitou e vai verificar se é um número, se for irá retornar com um valor inteiro, se não for o loop continua
+    até o usuário digitar um número, para validar se o usuário está digitando um número que está dentre das opções, coloquei
+    num while True, que enquanto o número que ele digitou não me servir, meu código pede de novo.
+
+Função Cadastro:
+    na opçao 1 temos uma função 'cadastro' que recebe de parâmetro meu dicionario e minha lista, a função começa com uma
+    váriavel 'usuarioExiste' com um valor de False, e em seguida peço o usuário em uma váriavel 'usuarioNovo', já no while True
+    verifico se o usuario que ele digitou já existe na minha lista de dicionarios pegando o indice da lista num for com a chave
+    'usuario' do dicionario, caso ele encontre a minha váriavel 'usuarioExiste' recebe um valor de True que vai impossibilitar
+    o úsuario a sair do loop até ele criar um nome que não existe, agora se não existir, guardar a váriavel usuarioNovo na chave
+    'usuario' do meu dicionario, e deposi vai pedir a senha que vai ser o valor dessa chave e em seguida ser appendada na minha lista.
+
+Validações de usuários e senhas:
+    para validar o usuario e senhas, utilizei a função validaStr, que recebe o input que o usuario digitar, guardo esse
+    input numa váriavel e verifico se o len dessa váriavel é menor do que 3, se for irá pedir para o usuário digitar
+    um novo nome, só vai sair do loop retornando quando o usuário digitar um nome maior doque 2 letras (o mesmo fiz para as senhas)
+
+    fiz mais uma função para o nome do usuário que não deixa que o usuário digite números no nome dele, essa função chama
+    'validaUsuario' e como parâmetro ele recebe oque retornar da minha função 'validaStr' ou seja, já terei certeza que
+    trabalharei com um nome a com 3 ou mais letras, o validaUsuario não vai deixar o usuário sair do loop até que ele
+    digite apenas letras no nome, para isso usei o '.isalpha()'.
+
+Função para validar o login:
+    Na opção 2 eu chamo o 'validaLogin' que vai receber apenas o dicionario como parâmetro, logo de cara nessa função
+    eu verifico se o len do meu dicionario é maior do que 0 para o usuário não fazer o login antes mesmo de se cadastrar
+    se não for maior do que 0 eu crio uma váriavel 'liberarUsuario' que tem um valor de false e retorno ela da função,
+    para que no meu main eu faça um if o return da função for falso, ele volta no começo do loop e pede pro usuario fazer o
+    cadastro antes. Agora caso o len do meu dicionário for maior do que 0, peço o nome de usuário e a senha para o usuário
+    e verifico atráves de um for se o indice de cada dicionario na lista tem a chave e o valor igual ao usúario e senha
+    se dar False um das verificações, a função não deixará o usuário sair do loop e pedirá para ele informar novamente o nome e senha
+    ,agora se der True as duas verificações, a minha váriavel 'liberarUsuario' recebe True e retorna da minha função, no meu main
+    verifico se oque retornou da função é True, se for dou um break e deixo o usuário navergar pelo resto do sistema.
+
+    Na opção 3, dou um break no meu while no main para o usuario entrar sem login e navegar pelo sistema.
+
+Função exibirDicionario:
+    após meu usuario sair do menu, entramos no dashboard do sistema onde se o usuario digita a opção 1 é criado um dicionario
+    com chave de tipos de materiais e com cada chave contendo no seu valor um outro dicionario que apresenta chaves com
+    o subtipo de cada material e com cada uma dessas chaves um valor em reais por kg. Na função exibirDicionario pego esse
+    dicionario como parâmetro e faço um for com 2 indices no meu dicionario, o primeiro pega as chaves externas que são
+    os tipos de materiais, no segundo indice, eu faço um for logo dentro do primeiro for que vai exibir as chaves que estão no
+    dicionario interno, por exemplo: for i,j in dic.items():
+                                        print(i)
+                                         for k in j.items():
+                                            print(k[0])
+    dessa forma printo um tipo de material e logo embaixo as chaves que estão dentro do dicionario que esse material tem o valor
+
+
+Função validaEscolhaDoSubtipo:
+    chamo essa função após exibir as opções do meu dicionario para o usuario, essa minha função vai receber o dicionario
+    como parâmetro, a função começa com um While True e uma váriavel 'subtipo' que vai receber um input do usuario,
+    a ideia é que enquanto o subtipo que o usuário digitar não estiver nas chaves do meu dicionario interno, o sistema
+    pedirá de novo, para isso, após pedir o subtipo para o usuário, fiz um for i,j in dic.items():
+                                                                               for k in j.items():
+                                                                                    if subtipo == k[0]:
+                                                                                        return subtipo
+    esse é um for bem parecido com o da função exibirdicionarios, mas dessa vez ao invés de printar as chaves do dicionarios
+    internos eu pego oque o usuário digitou e comparo com as chaves desses dicionarios internos que armazenam os subtipos
+    de cada material.
+
+Função calcular:
+    a ideia aqui é pegar o subtipo do material que o usuario quer descartar na sucataria que foi validado na função acima,
+    a quantidade de kg que ele vai descartar que foi validade atráves da função 'lerInt' que expliquei acima, dito isso,
+    chamei a função calcular com 3 parâmetros o subtipo já validado, o kg já validado e o dicionario, como agora quero
+    trabalhar com os valores das minha chaves dos meus dicionários internos, o meu for vai ser um pouco diferente dos que
+    fiz acima, vai ser algo como: for i,j in dic.items():
+                                         for k,valor in j.items():
+                                            if subtipo == k:
+                                                multiplicacao = kg * valor
+                                                return multiplicacao
+    ou seja, no meu segundo for surgiu mais um indice que vai representar o valor das minhas chaves internas, e fiz uma
+    verificação de quando o subtipo for igual a alguma chave interna ele vai guardar numa variavel a multiplicação dos kg
+    com o valor da chave interna que for igual ao subtipo informado, e retornará essa váriavel
+
+Função validaContinuar:
+    a ideia aqui é guardar o resultado da função calcular em uma variavel 'resultado' que toda vez que o usuário digita a opção 1
+    ela é zerada, ou seja o usuario vai informar que subtipo de material ele quer descartar na sucataria e seu peso,
+    cada subtipo tem um valor médio por kg que as sucatarias costumam a pagar para quem descarta com eles, então o usuario
+    digita as informações e irei perguntar numa variavel se ele quer adicionar outro subtipo de material para descarte,
+    se ele digitar 1 continua, se ele digitar 2 para e exibe o a váriavel resultado que tem o valor da função calcular
+    para validar essa variavel que recebe 1 ou 2, criei uma função que recebe um input já com a função 'lerInt' para receber
+    um número como parâmetro e enquanto esse número for diferente de 1 ou de 2 ele vai solicitar de novo
+
+Opção 2 do Dashboard:
+    aqui já entra na opção 2 do dashboard, que tem bastante semelhança com a opção 1, aqui o dicionario 'materiais' criado
+    também possuem chaves com os tipos de materiais e cada chave com um valor de dicionarios internos com chaves de subtipos
+    de cada material, só que nesses dicionarios internos o valor representa a quantidade em kg de CO2 economizados a cada
+    kg de subtipo reciclado, então o funcionamento até aqui é parecido, vai pedir o subtipo com a função que valida ele,
+    vai pedir os kg desse subtipo para fazer a multiplicação com o valor das chaves internas do dicionario, irei guardar
+    o retorno da função calcular numa variavel chamado resultado também, e que também é zerada toda vez que a opção 2 é
+    chamada, para o usuário poder escolher mais de um subtipo e peso para ir somando com o valor resultado, o diferencial
+    é que nessa seção criei um dicionario comum chamado 'dados' e que nesse dicionario tem a chave que é uma informação,
+    como ex: 'arvores salvas por ano' e com o valor de 0.045 que representa quantas árvores são poupadas por ano com 1 kg de
+    CO2 economizados, nesse dicionario tem varias informações diferentes com valores diferentes mas mantendo a métrica
+    de a cada 1 kg de CO2 economizados, a ideia é qua quando o sistema exiba a variavel resultado que armazena o valor de
+    CO2 economizados, exiba junto um desses dados com esses valores multiplicadas pela quantidade de CO2 que o usúario
+    economizou nessa simulação, para isso criei a função:
+
+    Função exibirDicionarioDeEquivalencias:
+        essa função receber como parâmetros o dicionario 'dados' e a variavel 'resultado' e nessa função, como eu quero
+        que exiba apenas uma informação com seu valor, quero que seja uma informação  com um indice aleátorio,
+        então para isso fiz o seguinte na função: chaves = list(dicionario.keys())
+                                                  chave_aleatoria = random.choice(chaves)
+                                                  valor_aleatorio = dicionario[chave_aleatoria]
+                                                  return f'Isso equivale a {int(valor_aleatorio * kg)} de {chave_aleatoria}'
+        ou seja ela transforma cada chave de um dicionario em uma lista, para na variavel 'chave_aleatoria' receber uma info
+        aleátorio que está no dicionario, e crio uma variavel 'valor_aleatorio' para receber o valor dessa info que foi sorteada
+        e no final retorno o valor multiplicado com o meu parâmetro resultado para ver o quanto realmente equivale aquilo que
+        estou dando como informação.
+
+opção 3 do Dashboard:
+    aqui nessa opção ele deixa de ser uma simulação como era na opção 2 e 1, e passa a ser um sistema de pontos da empresa
+    para os clientes que a cada kg de material reciclado pelo usuario ele ganhará pontos que poderão ser convertidos em recompensas
+    ,dessa maneira começo criando um dicionario 'materiais' porém dessa vez só com uma chave e um valor mesmo, a chave
+    representa o material e o valor dela reprenseta qunatos pontos serão dados a cada kg reciclado desse material
+
+    função exibirDicionarioDePontos:
+        nessa função recebo o meu dicionário como parâmetro e realizo um for mais simples dessa vez que printara só as
+        chaves do meu dicionario
+
+    função validarTipoDeMaterial:
+        nessa função recebo de parâmetro só um dicionario, dentro de um while True pergunto qual material ele quer reciclar,
+        guardo em uma váriavel 'tipoDeMaterial e faço um for para verificar se ela existe no meu dicionario, ficando assim:
+        for i in dicionario.items():
+            if i[0] == tipoMaterial:
+            return tipoMaterial
+        ou seja, se alguma chave desse dicionario for igual ao tipo de material digitado, ele retornara, caso o contrário
+        o usuário ficará no loop
+
+
+    depois de validar o tipo de material que o usuário digitou chamo a função calcular para ter o resultado de quantos
+    pontos o usuário vai ter reciclado aquele material conosco, verifico se ele quer adicionar outro material para reciclar
+    com a função continuar, porém caso ele não queira eu ainda não chamarei a próxima função, como fiz na opção 1 e 2,
+    dessa vez na opção 3 não começo com uma váriavel 'resultado' zerada para depois guardar o valor da função calcular nela
+    e exibir, eu declaro fora de todos os whiles do meu main uma variavel chamada 'result' e outra 'interações' ambas zeradas,
+    e na minha opção 3, vou armazenando os valores da função calcular na minha variavel result, ela só será zerada se eu
+    parar de rodar meu código ou se eu forçar ela a ser zerada, isso por que adicionei um if na opção 3 após verificar
+    se o usuario nao tem mais nenhum material a reciclar, onde é perguntado se ele quer converter os pontos dele agora ou
+    se ele deseja ir acumulando pontos para futuras reciclagens para garantir melhores recompensas,
+    se o usuário não quiser converter agora, a variavel interações é adicionado um +1 onde ela é utilizada logo quando a
+    opção 3 é chamada, onde faço uma verfifcação que se o valor de 'interações' == 0, logo declaro que 'result' também será
+    já que nesse momento o usuário não teria respondido se queria armazenar ou converter pontos, agora caso o usuário
+    opte por converter seus pontos a função recompensas é chamada e as váriaveis 'interações' e 'result' são zeradas
+
+    função recompensas:
+        essa função recebe o parâmetro result e que verifca se esse result é maior do que determinadas quantidades de pontos
+        , a cada escala de pontos o usúario recebe uma recompensa diferente que será exibida na variavel 'beneficio'
+        que contém a recompensa e é retornada no final dessa função.
+
+opção 4:
+    ao usuário digitar 4, é dado um break no while do dashborad encerrando o programa, e caso o usuário digite uma opção
+    invalida, ele não sairá do loop, assim como no while do menu.
+
+
